@@ -1,19 +1,49 @@
-const container = document.querySelector(".mouse-hightliter-extension");
-const mouse_pointer = document.querySelector(".mouse-pointer-extension");
+window.addEventListener("DOMContentLoaded", () => {
+  /**
+   * Creating Div Dynamically
+   * 
+   */
+  const circleContainer = document.createElement("div");
+  const circleDiv = document.createElement("div");
+  circleContainer.setAttribute("class", "highlighter_container");
+  circleDiv.setAttribute("class", "highlighter_overlay");
 
-window.addEventListener("mousemove", mouseMove);
+  circleContainer.appendChild(circleDiv);
+  document.body.appendChild(circleContainer);
 
-function mouseMove(event) {
-  let x = event.clientX;
-  let y = event.clientY;
+  /**
+   * Getting the x and y of the Mouse
+   *
+   */
 
-  mouse_pointer.style.left = x + "px";
-  mouse_pointer.style.top = y + "px";
-}
+  window.addEventListener("mousemove", (event) => {
+     let x = event.clientX;
+     let y = event.clientY;
 
+     circleDiv.style.left = x + "px";
+     circleDiv.style.top = y + "px";
+  });
 
-function onKeyDown(event){
-    if (event.shiftkey && event.code === "KeyC"){
-        container.style.display = "none";
-    }
-}
+  /**
+   * Getting the KeyBoard Button Press to perfom some task
+   *
+   */
+
+  window.addEventListener("keydown", (event) => {
+     const { shiftKey, code } = event;
+
+     if (shiftKey && code === "KeyX") {
+        circleDiv.style.height = circleDiv.clientHeight - 20 + "px";
+        circleDiv.style.width = circleDiv.clientWidth - 20 + "px";
+     } else if (shiftKey && code === "KeyZ") {
+        circleDiv.style.height = circleDiv.clientHeight + 20 + "px";
+        circleDiv.style.width = circleDiv.clientWidth + 20 + "px";
+     }
+
+     if (shiftKey && code === "KeyC") {
+        circleContainer.style.display = "none";
+     } else if (shiftKey && code === "KeyV") {
+        circleContainer.style.display = "block";
+     }
+  });
+});
